@@ -1363,8 +1363,8 @@ sub _assert_ssl {
     # Need IO::Socket::SSL 1.42 for SSL_create_ctx_callback
     die(qq/IO::Socket::SSL 1.42 must be installed for https support\n/)
         unless eval {require IO::Socket::SSL; IO::Socket::SSL->VERSION(1.42)};
-    # Need Net::SSLeay 1.49 for MODE_AUTO_RETRY
-    die(qq/Net::SSLeay 1.49 must be installed for https support\n/)
+    # Need Net::SSLeay 1.49 for MODE_AUTO_RETRY. Else disable MODE_AUTO_RETRY
+    eval { sub Net::SSLeay::MODE_AUTO_RETRY { 0 } }
         unless eval {require Net::SSLeay; Net::SSLeay->VERSION(1.49)};
 }
 
